@@ -1,0 +1,396 @@
+@import "tailwindcss";
+
+:root {
+  --background: #12151a;
+  --surface: #1b2129;
+  --ink: #f3eee6;
+  --muted: #a9b0ba;
+  --line: #2d3642;
+  --accent: #a63d2f;
+  --accent-dark: #882f24;
+  --accent-soft: #3a2420;
+  --folder: #232a34;
+  --male: #c45a2c;
+  --female: #a63d2f;
+  --field-bg: #141920;
+  --danger-bg: #3a2222;
+  --danger-text: #f0b4a8;
+  --danger-line: #6a3a34;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top left, rgba(166, 61, 47, 0.18), transparent 42%),
+    radial-gradient(circle at bottom right, rgba(196, 90, 44, 0.12), transparent 38%),
+    var(--background);
+  color: var(--ink);
+  font-family: var(--font-body), "Segoe UI", sans-serif;
+}
+
+.field {
+  width: 100%;
+  border: 2px solid var(--line);
+  border-radius: 1rem;
+  background: var(--field-bg);
+  padding: 0.95rem 1rem;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(166, 61, 47, 0.25);
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.1rem;
+  border-radius: 999px;
+  padding: 0.75rem 1.35rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  transition: transform 0.12s ease, background-color 0.12s ease, opacity 0.12s ease;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border: 2px solid var(--line);
+}
+
+.btn-secondary:hover {
+  background: var(--folder);
+}
+
+.btn-danger {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 2px solid var(--danger-line);
+}
+
+.btn-primary:active,
+.btn-secondary:active,
+.btn-danger:active {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gallery-nav-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 20;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  border: 2px solid var(--line);
+  background: #1b2129;
+  color: #f3eee6;
+  padding: 1.25rem 0.85rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+
+.gallery-nav-btn:disabled {
+  opacity: 0.4;
+}
+
+.gallery-nav-btn--prev {
+  left: 0.5rem;
+}
+
+.gallery-nav-btn--next {
+  right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .gallery-nav-btn {
+    padding: 1.6rem 1rem;
+    font-size: 1.75rem;
+  }
+
+  .gallery-nav-btn--prev {
+    left: 1rem;
+  }
+
+  .gallery-nav-btn--next {
+    right: 1rem;
+  }
+}
+
+/* On-screen print page preview ≈ A4 (keeps page ratio) */
+.print-sheet--landscape {
+  width: min(100%, 297mm, calc((100vh - 11rem) * 297 / 210));
+  aspect-ratio: 297 / 210;
+}
+
+.print-sheet--portrait {
+  width: min(100%, 210mm, calc((100vh - 11rem) * 210 / 297));
+  aspect-ratio: 210 / 297;
+}
+
+.print-sheet .print-detailed-body {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+}
+
+.print-sheet img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 6mm;
+  }
+
+  @page portrait-sheet {
+    size: A4 portrait;
+    margin: 6mm;
+  }
+
+  html,
+  body {
+    background: white !important;
+    color: #111 !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body * {
+    box-shadow: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  main {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .print-sheet {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    padding: 2mm !important;
+    background: white !important;
+    color: #111 !important;
+    border: 1pt solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    page-break-inside: avoid;
+  }
+
+  .print-sheet--landscape {
+    width: 100% !important;
+    height: 198mm !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+  }
+
+  .print-sheet--portrait {
+    page: portrait-sheet;
+    width: 100% !important;
+    height: 285mm !important;
+    aspect-ratio: auto !important;
+    max-height: none !important;
+  }
+
+  .print-heading-bar {
+    display: grid !important;
+    grid-template-columns: 38mm minmax(0, 1fr) 38mm !important;
+    align-items: center !important;
+    gap: 3mm !important;
+    flex: 0 0 auto !important;
+    margin: 0 0 2mm !important;
+    padding: 0 0 2mm !important;
+    border: 0 !important;
+    border-bottom: 1pt solid #000 !important;
+  }
+
+  .print-end-box {
+    width: 100% !important;
+    height: 11mm !important;
+    border: 1pt solid #000 !important;
+    background: transparent !important;
+  }
+
+  .print-heading {
+    margin: 0 !important;
+    color: #111 !important;
+    font-size: 13pt !important;
+    font-weight: 700 !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+  }
+
+  .print-detailed,
+  .print-sheet-body {
+    display: flex !important;
+    flex-direction: column !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    gap: 2mm !important;
+    width: 100% !important;
+  }
+
+  .print-detailed-body {
+    display: grid !important;
+    grid-template-columns: 1.05fr 0.95fr !important;
+    gap: 3mm !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    width: 76% !important;
+    max-width: 76% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    overflow: hidden !important;
+  }
+
+  .print-detailed-info {
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .print-detailed-info h2 {
+    margin: 0 0 1.5mm !important;
+    font-size: 14pt !important;
+    line-height: 1.15 !important;
+  }
+
+  .print-detailed-media {
+    display: grid !important;
+    grid-template-rows: 1fr 1fr !important;
+    gap: 2mm !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .print-detailed-media > div {
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .print-remarks {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .print-remarks p {
+    margin: 0 0 1mm !important;
+    font-size: 9pt !important;
+  }
+
+  .print-remarks-line {
+    width: 100% !important;
+    border: 0 !important;
+    border-bottom: 1pt solid #000 !important;
+    height: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-info-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1pt solid #000 !important;
+    color: #111 !important;
+  }
+
+  .print-info-table th,
+  .print-info-table td {
+    padding: 0.9mm 1.6mm !important;
+    border: 0.6pt solid #000 !important;
+    line-height: 1.25 !important;
+    vertical-align: top !important;
+    color: #111 !important;
+  }
+
+  .print-info-table th {
+    width: 32% !important;
+    background: #f3f3f3 !important;
+    font-size: 9.5pt !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-info-table td {
+    font-size: 12.5pt !important;
+  }
+
+  .print-sheet-image {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  .print-sheet img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+}
